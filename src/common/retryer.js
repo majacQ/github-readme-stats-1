@@ -1,3 +1,4 @@
+  <<<<<<< organize-folders
 const { logger } = require("../common/utils");
 
 const retryer = async (fetcher, variables, retries = 0) => {
@@ -7,11 +8,24 @@ const retryer = async (fetcher, variables, retries = 0) => {
   try {
     logger.log(`Trying PAT_${retries + 1}`);
 
+  =======
+const { logger, CustomError } = require("../common/utils");
+
+const retryer = async (fetcher, variables, retries = 0) => {
+  if (retries > 7) {
+    throw new CustomError("Maximum retries exceeded", CustomError.MAX_RETRY);
+  }
+  try {
+  >>>>>>> master
     // try to fetch with the first token since RETRIES is 0 index i'm adding +1
     let response = await fetcher(
       variables,
       process.env[`PAT_${retries + 1}`],
+  <<<<<<< organize-folders
       retries
+  =======
+      retries,
+  >>>>>>> master
     );
 
     // prettier-ignore

@@ -1,4 +1,8 @@
+  <<<<<<< organize-folders
 const { FlexLayout } = require("../common/utils");
+  =======
+const { FlexLayout, encodeHTML } = require("../common/utils");
+  >>>>>>> master
 const { getAnimations } = require("../getStyles");
 
 class Card {
@@ -6,7 +10,12 @@ class Card {
     width = 100,
     height = 100,
     colors = {},
+  <<<<<<< organize-folders
     title = "",
+  =======
+    customTitle,
+    defaultTitle = "",
+  >>>>>>> master
     titlePrefixIcon,
   }) {
     this.width = width;
@@ -17,7 +26,15 @@ class Card {
 
     // returns theme based colors with proper overrides and defaults
     this.colors = colors;
+  <<<<<<< organize-folders
     this.title = title;
+  =======
+    this.title =
+      customTitle !== undefined
+        ? encodeHTML(customTitle)
+        : encodeHTML(defaultTitle);
+
+  >>>>>>> master
     this.css = "";
 
     this.paddingX = 25;
@@ -85,6 +102,30 @@ class Card {
     `;
   }
 
+  <<<<<<< organize-folders
+  =======
+  renderGradient() {
+    if (typeof this.colors.bgColor !== "object") return;
+
+    const gradients = this.colors.bgColor.slice(1);
+    return typeof this.colors.bgColor === "object"
+      ? `
+        <defs>
+          <linearGradient
+            id="gradient" 
+            gradientTransform="rotate(${this.colors.bgColor[0]})"
+          >
+            ${gradients.map((grad, index) => {
+              let offset = (index * 100) / (gradients.length - 1);
+              return `<stop offset="${offset}%" stop-color="#${grad}" />`;
+            })}
+          </linearGradient>
+        </defs>
+        `
+      : "";
+  }
+
+  >>>>>>> master
   render(body) {
     return `
       <svg
@@ -102,6 +143,7 @@ class Card {
           }
           ${this.css}
 
+  <<<<<<< organize-folders
           ${
             process.env.NODE_ENV === "test" || !this.animations
               ? ""
@@ -109,6 +151,18 @@ class Card {
           }
         </style>
 
+  =======
+          ${process.env.NODE_ENV === "test" ? "" : getAnimations()}
+          ${
+            this.animations === false
+              ? `* { animation-duration: 0s !important; animation-delay: 0s !important; }`
+              : ""
+          }
+        </style>
+
+        ${this.renderGradient()}
+
+  >>>>>>> master
         <rect
           data-testid="card-bg"
           x="0.5"
@@ -117,7 +171,15 @@ class Card {
           height="99%"
           stroke="#E4E2E2"
           width="${this.width - 1}"
+  <<<<<<< organize-folders
           fill="${this.colors.bgColor}"
+  =======
+          fill="${
+            typeof this.colors.bgColor === "object"
+              ? "url(#gradient)"
+              : this.colors.bgColor
+          }"
+  >>>>>>> master
           stroke-opacity="${this.hideBorder ? 0 : 1}"
         />
 

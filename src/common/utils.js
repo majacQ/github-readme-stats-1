@@ -14,7 +14,11 @@ const renderError = (message, secondaryMessage = "") => {
     <text x="25" y="45" class="text">Something went wrong! file an issue at https://git.io/JJmN9</text>
     <text data-testid="message" x="25" y="55" class="text small">
       <tspan x="25" dy="18">${encodeHTML(message)}</tspan>
+  <<<<<<< organize-folders
       <tspan x="25" dy="18"  class="gray">${secondaryMessage}</tspan>
+  =======
+      <tspan x="25" dy="18" class="gray">${secondaryMessage}</tspan>
+  >>>>>>> master
     </text>
     </svg>
   `;
@@ -37,7 +41,11 @@ function kFormatter(num) {
 
 function isValidHexColor(hexColor) {
   return new RegExp(
+  <<<<<<< organize-folders
     /^([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4})$/
+  =======
+    /^([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4})$/,
+  >>>>>>> master
   ).test(hexColor);
 }
 
@@ -60,8 +68,27 @@ function clampValue(number, min, max) {
   return Math.max(min, Math.min(number, max));
 }
 
+  <<<<<<< organize-folders
 function fallbackColor(color, fallbackColor) {
   return (isValidHexColor(color) && `#${color}`) || fallbackColor;
+  =======
+function isValidGradient(colors) {
+  return isValidHexColor(colors[1]) && isValidHexColor(colors[2]);
+}
+
+function fallbackColor(color, fallbackColor) {
+  let colors = color.split(",");
+  let gradient = null;
+
+  if (colors.length > 1 && isValidGradient(colors)) {
+    gradient = colors;
+  }
+
+  return (
+    (gradient ? gradient : isValidHexColor(color) && `#${color}`) ||
+    fallbackColor
+  );
+  >>>>>>> master
 }
 
 function request(data, headers) {
@@ -110,6 +137,7 @@ function getCardColors({
   // finally if both colors are invalid fallback to default theme
   const titleColor = fallbackColor(
     title_color || selectedTheme.title_color,
+  <<<<<<< organize-folders
     "#" + defaultTheme.title_color
   );
   const iconColor = fallbackColor(
@@ -123,6 +151,21 @@ function getCardColors({
   const bgColor = fallbackColor(
     bg_color || selectedTheme.bg_color,
     "#" + defaultTheme.bg_color
+  =======
+    "#" + defaultTheme.title_color,
+  );
+  const iconColor = fallbackColor(
+    icon_color || selectedTheme.icon_color,
+    "#" + defaultTheme.icon_color,
+  );
+  const textColor = fallbackColor(
+    text_color || selectedTheme.text_color,
+    "#" + defaultTheme.text_color,
+  );
+  const bgColor = fallbackColor(
+    bg_color || selectedTheme.bg_color,
+    "#" + defaultTheme.bg_color,
+  >>>>>>> master
   );
 
   return { titleColor, iconColor, textColor, bgColor };
@@ -153,9 +196,68 @@ const logger =
 const CONSTANTS = {
   THIRTY_MINUTES: 1800,
   TWO_HOURS: 7200,
+  <<<<<<< organize-folders
   ONE_DAY: 86400,
 };
 
+  =======
+  FOUR_HOURS: 14400,
+  ONE_DAY: 86400,
+};
+
+const SECONDARY_ERROR_MESSAGES = {
+  MAX_RETRY:
+    "Please add an env variable called PAT_1 with your github token in vercel",
+  USER_NOT_FOUND: "Make sure the provided username is not an organization",
+};
+
+class CustomError extends Error {
+  constructor(message, type) {
+    super(message);
+    this.type = type;
+    this.secondaryMessage = SECONDARY_ERROR_MESSAGES[type] || "adsad";
+  }
+
+  static MAX_RETRY = "MAX_RETRY";
+  static USER_NOT_FOUND = "USER_NOT_FOUND";
+}
+
+// https://stackoverflow.com/a/48172630/10629172
+function measureText(str, fontSize = 10) {
+  // prettier-ignore
+  const widths = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0.2796875, 0.2765625,
+    0.3546875, 0.5546875, 0.5546875, 0.8890625, 0.665625, 0.190625,
+    0.3328125, 0.3328125, 0.3890625, 0.5828125, 0.2765625, 0.3328125,
+    0.2765625, 0.3015625, 0.5546875, 0.5546875, 0.5546875, 0.5546875,
+    0.5546875, 0.5546875, 0.5546875, 0.5546875, 0.5546875, 0.5546875,
+    0.2765625, 0.2765625, 0.584375, 0.5828125, 0.584375, 0.5546875,
+    1.0140625, 0.665625, 0.665625, 0.721875, 0.721875, 0.665625,
+    0.609375, 0.7765625, 0.721875, 0.2765625, 0.5, 0.665625,
+    0.5546875, 0.8328125, 0.721875, 0.7765625, 0.665625, 0.7765625,
+    0.721875, 0.665625, 0.609375, 0.721875, 0.665625, 0.94375,
+    0.665625, 0.665625, 0.609375, 0.2765625, 0.3546875, 0.2765625,
+    0.4765625, 0.5546875, 0.3328125, 0.5546875, 0.5546875, 0.5,
+    0.5546875, 0.5546875, 0.2765625, 0.5546875, 0.5546875, 0.221875,
+    0.240625, 0.5, 0.221875, 0.8328125, 0.5546875, 0.5546875,
+    0.5546875, 0.5546875, 0.3328125, 0.5, 0.2765625, 0.5546875,
+    0.5, 0.721875, 0.5, 0.5, 0.5, 0.3546875, 0.259375, 0.353125, 0.5890625,
+  ];
+
+  const avg = 0.5279276315789471;
+  return (
+    str
+      .split("")
+      .map((c) =>
+        c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg,
+      )
+      .reduce((cur, acc) => acc + cur) * fontSize
+  );
+}
+
+  >>>>>>> master
 module.exports = {
   renderError,
   kFormatter,
@@ -169,6 +271,13 @@ module.exports = {
   getCardColors,
   clampValue,
   wrapTextMultiline,
+  <<<<<<< organize-folders
   logger,
   CONSTANTS,
+  =======
+  measureText,
+  logger,
+  CONSTANTS,
+  CustomError,
+  >>>>>>> master
 };

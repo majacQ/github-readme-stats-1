@@ -1,3 +1,4 @@
+  <<<<<<< organize-folders
 const {
   kFormatter,
   getCardColors,
@@ -7,6 +8,20 @@ const {
 const { getStyles } = require("../getStyles");
 const icons = require("../common/icons");
 const Card = require("../common/Card");
+  =======
+const I18n = require("../common/I18n");
+const Card = require("../common/Card");
+const icons = require("../common/icons");
+const { getStyles } = require("../getStyles");
+const { statCardLocales } = require("../translations");
+const {
+  kFormatter,
+  FlexLayout,
+  clampValue,
+  measureText,
+  getCardColors,
+} = require("../common/utils");
+  >>>>>>> master
 
 const createTextNode = ({
   icon,
@@ -34,7 +49,11 @@ const createTextNode = ({
       <text class="stat bold" ${labelOffset} y="12.5">${label}:</text>
       <text 
         class="stat" 
+  <<<<<<< organize-folders
         x="${shiftValuePos ? (showIcons ? 200 : 170) : 150}" 
+  =======
+        x="${(showIcons ? 140 : 120) + shiftValuePos}" 
+  >>>>>>> master
         y="12.5" 
         data-testid="${id}"
       >${kValue}</text>
@@ -65,6 +84,12 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     text_color,
     bg_color,
     theme = "default",
+  <<<<<<< organize-folders
+  =======
+    custom_title,
+    locale,
+    disable_animations = false,
+  >>>>>>> master
   } = options;
 
   const lheight = parseInt(line_height, 10);
@@ -78,17 +103,36 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     theme,
   });
 
+  <<<<<<< organize-folders
+  =======
+  const apostrophe = ["x", "s"].includes(name.slice(-1).toLocaleLowerCase())
+    ? ""
+    : "s";
+  const i18n = new I18n({
+    locale,
+    translations: statCardLocales({ name, apostrophe }),
+  });
+
+  >>>>>>> master
   // Meta data for creating text nodes with createTextNode function
   const STATS = {
     stars: {
       icon: icons.star,
+  <<<<<<< organize-folders
       label: "Total Stars",
+  =======
+      label: i18n.t("statcard.totalstars"),
+  >>>>>>> master
       value: totalStars,
       id: "stars",
     },
     commits: {
       icon: icons.commits,
+  <<<<<<< organize-folders
       label: `Total Commits${
+=======
+      label: `${i18n.t("statcard.commits")}${
+  >>>>>>> master
         include_all_commits ? "" : ` (${new Date().getFullYear()})`
       }`,
       value: totalCommits,
@@ -96,24 +140,42 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     },
     prs: {
       icon: icons.prs,
+  <<<<<<< organize-folders
       label: "Total PRs",
+  =======
+      label: i18n.t("statcard.prs"),
+  >>>>>>> master
       value: totalPRs,
       id: "prs",
     },
     issues: {
       icon: icons.issues,
+  <<<<<<< organize-folders
       label: "Total Issues",
+  =======
+      label: i18n.t("statcard.issues"),
+  >>>>>>> master
       value: totalIssues,
       id: "issues",
     },
     contribs: {
       icon: icons.contribs,
+  <<<<<<< organize-folders
       label: "Contributed to",
+  =======
+      label: i18n.t("statcard.contribs"),
+  >>>>>>> master
       value: contributedTo,
       id: "contribs",
     },
   };
 
+  <<<<<<< organize-folders
+  =======
+  const longLocales = ["cn", "es", "fr", "pt-br", "ru", "uk-ua", "id", "my", "pl"];
+  const isLongLocale = longLocales.includes(locale) === true;
+
+  >>>>>>> master
   // filter out hidden stats defined by user & create the text nodes
   const statItems = Object.keys(STATS)
     .filter((key) => !hide.includes(key))
@@ -123,15 +185,25 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
         ...STATS[key],
         index,
         showIcons: show_icons,
+  <<<<<<< organize-folders
         shiftValuePos: !include_all_commits,
       })
+  =======
+        shiftValuePos:
+          (!include_all_commits ? 50 : 20) + (isLongLocale ? 50 : 0),
+      }),
+  >>>>>>> master
     );
 
   // Calculate the card height depending on how many items there are
   // but if rank circle is visible clamp the minimum height to `150`
   let height = Math.max(
     45 + (statItems.length + 1) * lheight,
+  <<<<<<< organize-folders
     hide_rank ? 0 : 150
+  =======
+    hide_rank ? 0 : 150,
+  >>>>>>> master
   );
 
   // Conditionally rendered elements
@@ -165,10 +237,29 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
     progress,
   });
 
+  <<<<<<< organize-folders
   const apostrophe = ["x", "s"].includes(name.slice(-1)) ? "" : "s";
   const card = new Card({
     title: `${encodeHTML(name)}'${apostrophe} GitHub Stats`,
     width: 495,
+  =======
+  const calculateTextWidth = () => {
+    return measureText(custom_title ? custom_title : i18n.t("statcard.title"));
+  };
+
+  const width = hide_rank
+    ? clampValue(
+        50 /* padding */ + calculateTextWidth() * 2,
+        270 /* min */,
+        Infinity,
+      )
+    : 495;
+
+  const card = new Card({
+    customTitle: custom_title,
+    defaultTitle: i18n.t("statcard.title"),
+    width,
+  >>>>>>> master
     height,
     colors: {
       titleColor,
@@ -182,6 +273,11 @@ const renderStatsCard = (stats = {}, options = { hide: [] }) => {
   card.setHideTitle(hide_title);
   card.setCSS(cssStyles);
 
+  <<<<<<< organize-folders
+  =======
+  if (disable_animations) card.disableAnimations();
+
+  >>>>>>> master
   return card.render(`
     ${rankCircle}
 
