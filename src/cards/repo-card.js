@@ -1,4 +1,7 @@
+  <<<<<<< organize-folders
+  =======
 const toEmoji = require("emoji-name-map");
+  >>>>>>> master
 const {
   kFormatter,
   encodeHTML,
@@ -6,10 +9,16 @@ const {
   FlexLayout,
   wrapTextMultiline,
 } = require("../common/utils");
+  <<<<<<< organize-folders
+const icons = require("../common/icons");
+const Card = require("../common/Card");
+const toEmoji = require("emoji-name-map");
+  =======
 const I18n = require("../common/I18n");
 const Card = require("../common/Card");
 const icons = require("../common/icons");
 const { repoCardLocales } = require("../translations");
+  >>>>>>> master
 
 const renderRepoCard = (repo, options = {}) => {
   const {
@@ -23,14 +32,20 @@ const renderRepoCard = (repo, options = {}) => {
     forkCount,
   } = repo;
   const {
+  <<<<<<< organize-folders
+  =======
     hide_border = false,
+  >>>>>>> master
     title_color,
     icon_color,
     text_color,
     bg_color,
     show_owner,
     theme = "default_repocard",
+  <<<<<<< organize-folders
+  =======
     locale,
+  >>>>>>> master
   } = options;
 
   const header = show_owner ? nameWithOwner : name;
@@ -53,11 +68,14 @@ const renderRepoCard = (repo, options = {}) => {
   const height =
     (descriptionLines > 1 ? 120 : 110) + descriptionLines * lineHeight;
 
+  <<<<<<< organize-folders
+  =======
   const i18n = new I18n({
     locale,
     translations: repoCardLocales,
   });
 
+  >>>>>>> master
   // returns theme based colors with proper overrides and defaults
   const { titleColor, textColor, iconColor, bgColor } = getCardColors({
     title_color,
@@ -71,7 +89,11 @@ const renderRepoCard = (repo, options = {}) => {
   const totalForks = kFormatter(forkCount);
 
   const getBadgeSVG = (label) => `
+  <<<<<<< organize-folders
+    <g data-testid="badge" class="badge" transform="translate(320, 38)">
+  =======
     <g data-testid="badge" class="badge" transform="translate(320, -18)">
+  >>>>>>> master
       <rect stroke="${textColor}" stroke-width="1" width="70" height="20" x="-12" y="-14" ry="10" rx="10"></rect>
       <text
         x="23" y="-5"
@@ -114,7 +136,11 @@ const renderRepoCard = (repo, options = {}) => {
   }).join("");
 
   const card = new Card({
+  <<<<<<< organize-folders
+    title: header,
+  =======
     defaultTitle: header,
+  >>>>>>> master
     titlePrefixIcon: icons.contribs,
     width: 400,
     height,
@@ -127,7 +153,11 @@ const renderRepoCard = (repo, options = {}) => {
   });
 
   card.disableAnimations();
+  <<<<<<< organize-folders
+  card.setHideBorder(false);
+  =======
   card.setHideBorder(hide_border);
+  >>>>>>> master
   card.setHideTitle(false);
   card.setCSS(`
     .description { font: 400 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: ${textColor} }
@@ -140,9 +170,15 @@ const renderRepoCard = (repo, options = {}) => {
   return card.render(`
     ${
       isTemplate
+  <<<<<<< organize-folders
+        ? getBadgeSVG("Template")
+        : isArchived
+        ? getBadgeSVG("Archived")
+  =======
         ? getBadgeSVG(i18n.t("repocard.template"))
         : isArchived
         ? getBadgeSVG(i18n.t("repocard.archived"))
+  >>>>>>> master
         : ""
     }
 
@@ -156,7 +192,11 @@ const renderRepoCard = (repo, options = {}) => {
       ${svgLanguage}
 
       <g
+  <<<<<<< organize-folders
+        data-testid="star-fork-group" 
+  =======
         data-testid="star-fork-group"
+  >>>>>>> master
         transform="translate(${primaryLanguage ? 155 - shiftText : 25}, 0)"
       >
         ${starAndForkCount}

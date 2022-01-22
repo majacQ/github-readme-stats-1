@@ -4,11 +4,18 @@ const {
   parseBoolean,
   clampValue,
   CONSTANTS,
+  <<<<<<< organize-folders
+  logger,
+} = require("../src/common/utils");
+const fetchRepo = require("../src/fetchers/repo-fetcher");
+const renderRepoCard = require("../src/cards/repo-card");
+  =======
 } = require("../src/common/utils");
 const fetchRepo = require("../src/fetchers/repo-fetcher");
 const renderRepoCard = require("../src/cards/repo-card");
 const blacklist = require("../src/common/blacklist");
 const { isLocaleAvailable } = require("../src/translations");
+  >>>>>>> master
 
 module.exports = async (req, res) => {
   const {

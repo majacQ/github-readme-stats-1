@@ -14,7 +14,11 @@ const renderError = (message, secondaryMessage = "") => {
     <text x="25" y="45" class="text">Something went wrong! file an issue at https://git.io/JJmN9</text>
     <text data-testid="message" x="25" y="55" class="text small">
       <tspan x="25" dy="18">${encodeHTML(message)}</tspan>
+  <<<<<<< organize-folders
+      <tspan x="25" dy="18"  class="gray">${secondaryMessage}</tspan>
+  =======
       <tspan x="25" dy="18" class="gray">${secondaryMessage}</tspan>
+  >>>>>>> master
     </text>
     </svg>
   `;
@@ -37,7 +41,11 @@ function kFormatter(num) {
 
 function isValidHexColor(hexColor) {
   return new RegExp(
+  <<<<<<< organize-folders
+    /^([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4})$/
+  =======
     /^([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{4})$/,
+  >>>>>>> master
   ).test(hexColor);
 }
 
@@ -60,6 +68,10 @@ function clampValue(number, min, max) {
   return Math.max(min, Math.min(number, max));
 }
 
+  <<<<<<< organize-folders
+function fallbackColor(color, fallbackColor) {
+  return (isValidHexColor(color) && `#${color}`) || fallbackColor;
+  =======
 function isValidGradient(colors) {
   return isValidHexColor(colors[1]) && isValidHexColor(colors[2]);
 }
@@ -76,6 +88,7 @@ function fallbackColor(color, fallbackColor) {
     (gradient ? gradient : isValidHexColor(color) && `#${color}`) ||
     fallbackColor
   );
+  >>>>>>> master
 }
 
 function request(data, headers) {
@@ -124,6 +137,21 @@ function getCardColors({
   // finally if both colors are invalid fallback to default theme
   const titleColor = fallbackColor(
     title_color || selectedTheme.title_color,
+  <<<<<<< organize-folders
+    "#" + defaultTheme.title_color
+  );
+  const iconColor = fallbackColor(
+    icon_color || selectedTheme.icon_color,
+    "#" + defaultTheme.icon_color
+  );
+  const textColor = fallbackColor(
+    text_color || selectedTheme.text_color,
+    "#" + defaultTheme.text_color
+  );
+  const bgColor = fallbackColor(
+    bg_color || selectedTheme.bg_color,
+    "#" + defaultTheme.bg_color
+  =======
     "#" + defaultTheme.title_color,
   );
   const iconColor = fallbackColor(
@@ -137,6 +165,7 @@ function getCardColors({
   const bgColor = fallbackColor(
     bg_color || selectedTheme.bg_color,
     "#" + defaultTheme.bg_color,
+  >>>>>>> master
   );
 
   return { titleColor, iconColor, textColor, bgColor };
@@ -167,6 +196,11 @@ const logger =
 const CONSTANTS = {
   THIRTY_MINUTES: 1800,
   TWO_HOURS: 7200,
+  <<<<<<< organize-folders
+  ONE_DAY: 86400,
+};
+
+  =======
   FOUR_HOURS: 14400,
   ONE_DAY: 86400,
 };
@@ -223,6 +257,7 @@ function measureText(str, fontSize = 10) {
   );
 }
 
+  >>>>>>> master
 module.exports = {
   renderError,
   kFormatter,
@@ -236,8 +271,13 @@ module.exports = {
   getCardColors,
   clampValue,
   wrapTextMultiline,
+  <<<<<<< organize-folders
+  logger,
+  CONSTANTS,
+  =======
   measureText,
   logger,
   CONSTANTS,
   CustomError,
+  >>>>>>> master
 };

@@ -8,8 +8,11 @@ const {
 } = require("../src/common/utils");
 const fetchTopLanguages = require("../src/fetchers/top-languages-fetcher");
 const renderTopLanguages = require("../src/cards/top-languages-card");
+  <<<<<<< organize-folders
+  =======
 const blacklist = require("../src/common/blacklist");
 const { isLocaleAvailable } = require("../src/translations");
+  >>>>>>> master
 
 module.exports = async (req, res) => {
   const {

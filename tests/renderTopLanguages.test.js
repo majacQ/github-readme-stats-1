@@ -189,6 +189,33 @@ describe("Test renderTopLanguages", () => {
     document.body.innerHTML = renderTopLanguages(langs, { layout: "compact" });
 
     expect(queryByTestId(document.body, "header")).toHaveTextContent(
+  <<<<<<< organize-folders
+      "Most Used Languages"
+    );
+
+    expect(queryAllByTestId(document.body, "lang-name")[0]).toHaveTextContent(
+      "HTML 40.00%"
+    );
+    expect(queryAllByTestId(document.body, "lang-progress")[0]).toHaveAttribute(
+      "width",
+      "120.00"
+    );
+
+    expect(queryAllByTestId(document.body, "lang-name")[1]).toHaveTextContent(
+      "javascript 40.00%"
+    );
+    expect(queryAllByTestId(document.body, "lang-progress")[1]).toHaveAttribute(
+      "width",
+      "120.00"
+    );
+
+    expect(queryAllByTestId(document.body, "lang-name")[2]).toHaveTextContent(
+      "css 20.00%"
+    );
+    expect(queryAllByTestId(document.body, "lang-progress")[2]).toHaveAttribute(
+      "width",
+      "60.00"
+  =======
       "Most Used Languages",
     );
 
@@ -221,6 +248,7 @@ describe("Test renderTopLanguages", () => {
     document.body.innerHTML = renderTopLanguages(langs, { locale: "cn" });
     expect(document.getElementsByClassName("header")[0].textContent).toBe(
       "最常用的语言",
+  >>>>>>> master
     );
   });
 });
